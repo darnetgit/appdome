@@ -21,40 +21,40 @@ export class CharsContainerComponent implements OnInit, OnDestroy {
     ).subscribe(blinking=>{
       this.blink=blinking
     })
-    this.subscription = this.inputServ.reciveInput().subscribe(userInput => {
+    this.subscription = this.inputServ.reciveInput().subscribe(inputObject => {
       //single letter removed
-      if (this.chars.length-1==userInput.length) {
-        this.removeSingleLetter(this.chars[this.chars.length-1])
+      if (this.chars.length-1==inputObject.userInput.length) {
+        this.removeSingleLetter(this.chars[inputObject.index-1],inputObject.index-1)
       }
       //single letter added 
-      else if(this.chars.length+1==userInput.length) {
-        this.addSingleLetter(userInput[userInput.length-1])
+      else if(this.chars.length+1==inputObject.userInput.length) {
+        this.addSingleLetter(inputObject.userInput[inputObject.index],inputObject.index)
       }
       //major changes to input text-paste/cut/delete all
       else{
-        this.buildCharsCounter(userInput)
+        this.buildCharsCounter(inputObject.userInput)
       }
       //blink text with debounce of 0.1s
       this.blink=true
       this.charsChanged.next(false)
     });
   }
-  addSingleLetter(letter){
+  addSingleLetter(letter,index){
     if(this.charsCounter.has(letter)){
       this.charsCounter.set(letter,this.charsCounter.get(letter)+1)
     }else{
       this.charsCounter.set(letter,1)
     }
-    this.chars.push(letter)
+    this.chars.splice(index,0,letter)
   }
 
-  removeSingleLetter(letter){
+  removeSingleLetter(letter,index){
     if(this.charsCounter.get(letter)==1){
       this.charsCounter.delete(letter)
     }else{
       this.charsCounter.set(letter,this.charsCounter.get(letter)-1)
     }
-    this.chars.pop()
+    this.chars.splice(index,1)
   }
 
   buildCharsCounter(userInput){

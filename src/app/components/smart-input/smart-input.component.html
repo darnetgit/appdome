@@ -1,1 +1,1 @@
-<input [(ngModel)]="userInput" placeholder="Start typing..." (ngModelChange)="onInputChange()">
+<input [(ngModel)]="userInput" placeholder="Start typing..." (ngModelChange)="onInputChange()" (beforeinput)="onBeforeinput($event)">

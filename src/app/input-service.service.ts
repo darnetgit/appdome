@@ -9,8 +9,8 @@ export class InputServiceService {
 
   constructor() { }
 
-  sendInput(userInput) {
-    this.userInputsubject.next(userInput);
+  sendInput(userInput,index) {
+    this.userInputsubject.next({userInput,index});
   }
   reciveInput(): Observable<any> {
     return this.userInputsubject.asObservable();
