@@ -1,0 +1,3 @@
+<div [ngClass]="{'blinking':blink}">
+    <app-amazing-char *ngFor="let char of chars; ; let i=index" [inputChar]="{char:char, size:charsCounter.get(chars[i])}"></app-amazing-char>
+</div>
