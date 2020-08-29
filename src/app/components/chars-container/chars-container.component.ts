@@ -9,7 +9,7 @@ import { debounceTime } from 'rxjs/internal/operators';
   styleUrls: ['./chars-container.component.scss']
 })
 export class CharsContainerComponent implements OnInit, OnDestroy {
-  chars:Array<string>='Start typing...'.split('');
+  chars:Array<string>=[];
   charsCounter:Map<string,number>=new Map();
   subscription: Subscription;
   blink:boolean=false
@@ -17,9 +17,8 @@ export class CharsContainerComponent implements OnInit, OnDestroy {
 
   constructor(private inputServ:InputServiceService) { 
     this.charsChanged.pipe(
-      debounceTime(200),
-    )
-    .subscribe(blinking=>{
+      debounceTime(100),
+    ).subscribe(blinking=>{
       this.blink=blinking
     })
     this.subscription = this.inputServ.reciveInput().subscribe(userInput => {
@@ -35,6 +34,7 @@ export class CharsContainerComponent implements OnInit, OnDestroy {
       else{
         this.buildCharsCounter(userInput)
       }
+      //blink text with debounce of 0.1s
       this.blink=true
       this.charsChanged.next(false)
     });

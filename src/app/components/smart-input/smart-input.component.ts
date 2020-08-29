@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { InputServiceService } from '../../input-service.service';
-import { Subject } from 'rxjs';
-import {debounceTime, distinctUntilChanged} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-smart-input',
@@ -10,9 +8,9 @@ import {debounceTime, distinctUntilChanged} from "rxjs/internal/operators";
 })
 export class SmartInputComponent implements OnInit {
   userInput:string='';
-  constructor(private inputServ:InputServiceService) { 
-  }
-  onInputChange(input:string){
+  constructor(private inputServ:InputServiceService) { }
+
+  onInputChange(){
     this.inputServ.sendInput(this.userInput)
   }
   ngOnInit(): void {

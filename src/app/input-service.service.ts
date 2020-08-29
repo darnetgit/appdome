@@ -6,8 +6,9 @@ import { Observable, Subject } from 'rxjs';
 })
 export class InputServiceService {
   private userInputsubject = new Subject<any>();
-  private 
-  constructor() {}
+
+  constructor() { }
+
   sendInput(userInput) {
     this.userInputsubject.next(userInput);
   }
